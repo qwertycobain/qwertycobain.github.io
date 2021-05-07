@@ -1,0 +1,34 @@
+body {
+    background-color: black;
+    height: 10px;
+    
+
+}
+
+header{
+    color:white;
+    text-align: center;
+}
+
+h1{
+    font: "Lucida Console";
+    color:white;    
+    text-align: center;
+}
+
+section{
+    background-color: white;
+    border-radius:10px;
+    padding: 15px;
+    width: 500px;
+    margin:auto;
+}
+
+footer{
+    color: white;
+    text-align:center;
+    font-style:italic;
+}
+img{
+    width: 500px;
+}
