@@ -11,7 +11,13 @@ function carregar()
     var min = hora.getMinutes()
     var secs = hora.getSeconds()
     if (agora < 10){
-
+        agora= (`0${agora}`)
+    }
+    if (min < 10){
+        min = (`0${min}`)
+    }
+    if (secs < 10 ){
+        secs = (`0${secs}`)
     }
     
     msg.style.color = "black"
