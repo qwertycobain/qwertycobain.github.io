@@ -1,0 +1,36 @@
+---
+layout: post
+title:  "Git "
+date:   2022-01-05 01:08 -0300
+categories: jekyll update
+---
+
+{% highlight ruby %}
+git remote 
+{% endhighlight %}
+
+verifíca se já existe um repositório remoto
+
+{% highlight ruby %}
+git status
+{% endhighlight %}
+
+status geral do repo
+
+{% highlight ruby %}
+git push
+{% endhighlight %}
+
+envia alterações para a nuvem
+
+{% highlight ruby %}
+git checkout -b <branch>
+{% endhighlight %}
+
+cria uma nova branch, e entra nessa nova branch !
+
+{% highlight ruby %}
+git revert <id>
+{% endhighlight %}
+
+volta a um ponto especifico usando id 
