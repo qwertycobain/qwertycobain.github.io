@@ -21,7 +21,7 @@ status geral do repo
 git push
 {% endhighlight %}
 
-envia alterações para a nuvem
+sobe as modificações locais para o servidor
 
 {% highlight ruby %}
 git checkout -b <branch>
@@ -34,3 +34,9 @@ git revert <id>
 {% endhighlight %}
 
 volta a um ponto especifico usando id 
+
+{% highlight ruby %}
+git pull
+{% endhighlight %}
+
+usado pra buscar e baixar conteúdo de repositório remotos e fazer atualização imediata ao repositório local

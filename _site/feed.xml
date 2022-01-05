@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-01-05T01:10:00-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">man page for qwerty</title><subtitle>salvo as coisas aqui pra não me esquecer :0</subtitle><entry><title type="html">Git</title><link href="http://localhost:4000/jekyll/update/2022/01/05/GIT.html" rel="alternate" type="text/html" title="Git" /><published>2022-01-05T01:08:00-03:00</published><updated>2022-01-05T01:08:00-03:00</updated><id>http://localhost:4000/jekyll/update/2022/01/05/GIT</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2022/01/05/GIT.html"><![CDATA[<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">remote</span> </code></pre></figure>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-01-05T09:12:37-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">man page for qwerty</title><subtitle>salvo as coisas aqui pra não me esquecer :0</subtitle><entry><title type="html">Git</title><link href="http://localhost:4000/jekyll/update/2022/01/05/GIT.html" rel="alternate" type="text/html" title="Git" /><published>2022-01-05T01:08:00-03:00</published><updated>2022-01-05T01:08:00-03:00</updated><id>http://localhost:4000/jekyll/update/2022/01/05/GIT</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2022/01/05/GIT.html"><![CDATA[<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">remote</span> </code></pre></figure>
 
 <p>verifíca se já existe um repositório remoto</p>
 
@@ -8,7 +8,7 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">push</span></code></pre></figure>
 
-<p>envia alterações para a nuvem</p>
+<p>sobe as modificações locais para o servidor</p>
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="o">&lt;</span><span class="n">branch</span><span class="o">&gt;</span></code></pre></figure>
 
@@ -16,4 +16,8 @@
 
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">revert</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;</span></code></pre></figure>
 
-<p>volta a um ponto especifico usando id</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[git remote]]></summary></entry></feed>
+<p>volta a um ponto especifico usando id</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">git</span> <span class="n">pull</span></code></pre></figure>
+
+<p>usado pra buscar e baixar conteúdo de repositório remotos e fazer atualização imediata ao repositório local</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[git remote]]></summary></entry></feed>
