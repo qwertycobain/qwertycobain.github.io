@@ -1,0 +1,710 @@
+<?php
+date_default_timezone_set('America/Sao_Paulo');
+$hour = (int) date('H');
+
+if ($hour >= 6 && $hour < 12) {
+    $greeting = 'Bom dia';
+} elseif ($hour >= 12 && $hour < 18) {
+    $greeting = 'Boa tarde';
+} else {
+    $greeting = 'Boa noite';
+}
+
+$skills = ['Linux', 'Redes', 'Troubleshooting', 'Git/GitHub', 'Node.js', 'APIs RESTful', 'Python', 'DevOps'];
+
+$projects = [
+    [
+        'name' => 'API RESTful em Node.js',
+        'status' => 'concluido',
+        'description' => 'Projeto para praticar rotas, requisicoes HTTP e organizacao backend.',
+    ],
+    [
+        'name' => 'Laboratorio Linux',
+        'status' => 'em construcao',
+        'description' => 'Espaco para scripts, comandos, redes, diagnostico e automacao.',
+    ],
+    [
+        'name' => 'Projetos DevOps',
+        'status' => 'proximo passo',
+        'description' => 'Area reservada para deploy, CI/CD, monitoramento e infraestrutura.',
+    ],
+];
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Francisco | DevOps Portfolio</title>
+
+<style>
+    :root {
+        --bg: #020403;
+        --panel: #07110d;
+        --panel-2: #0b1913;
+        --text: #d7ffe8;
+        --muted: #7aa58d;
+        --line: rgba(74, 255, 151, 0.2);
+        --green: #39ff88;
+        --green-soft: rgba(57, 255, 136, 0.12);
+        --blue: #6db7ff;
+        --danger: #ff6b6b;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background:
+            linear-gradient(rgba(57, 255, 136, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(57, 255, 136, 0.035) 1px, transparent 1px),
+            radial-gradient(circle at 70% 20%, rgba(57, 255, 136, 0.08), transparent 28rem),
+            var(--bg);
+        background-size: 34px 34px, 34px 34px, auto, auto;
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.5;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .wrap {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+    }
+
+    .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--line);
+        background: rgba(2, 4, 3, 0.86);
+        backdrop-filter: blur(12px);
+    }
+
+    .nav .wrap {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .brand {
+        font-family: "Courier New", monospace;
+        font-weight: 800;
+        color: var(--green);
+        white-space: nowrap;
+    }
+
+    .links {
+        display: flex;
+        gap: 16px;
+        color: var(--muted);
+        font-size: 0.94rem;
+    }
+
+    .links a:hover {
+        color: var(--green);
+    }
+
+    .hero {
+        min-height: calc(100vh - 64px);
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 36px;
+        align-items: center;
+        padding: 56px 0;
+    }
+
+    .eyebrow {
+        color: var(--green);
+        font-family: "Courier New", monospace;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+    h1 {
+        max-width: 720px;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+        margin-bottom: 22px;
+    }
+
+    .lead {
+        max-width: 620px;
+        color: #b8d7c5;
+        font-size: 1.1rem;
+        margin-bottom: 28px;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 16px;
+        color: var(--text);
+        font-weight: 800;
+    }
+
+    .button.primary {
+        background: var(--green);
+        border-color: var(--green);
+        color: #00140a;
+    }
+
+    .button:hover {
+        box-shadow: 0 0 24px rgba(57, 255, 136, 0.18);
+        transform: translateY(-1px);
+    }
+
+    .terminal {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(7, 17, 13, 0.95);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45), 0 0 40px rgba(57, 255, 136, 0.08);
+        overflow: hidden;
+    }
+
+    .terminal-top {
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid var(--line);
+        padding: 0 14px;
+        background: #050907;
+        color: var(--muted);
+        font-family: "Courier New", monospace;
+        font-size: 0.86rem;
+    }
+
+    .dots {
+        display: flex;
+        gap: 7px;
+    }
+
+    .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--green);
+    }
+
+    .dot:nth-child(2) {
+        background: var(--blue);
+    }
+
+    .dot:nth-child(3) {
+        background: var(--danger);
+    }
+
+    .terminal-body {
+        min-height: 430px;
+        max-height: 58vh;
+        overflow-y: auto;
+        padding: 18px;
+        font-family: "Courier New", monospace;
+        font-size: 0.96rem;
+    }
+
+    .line {
+        margin-bottom: 8px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .prompt {
+        color: var(--green);
+        font-weight: 800;
+    }
+
+    .muted {
+        color: var(--muted);
+    }
+
+    .cursor::after {
+        content: "_";
+        color: var(--green);
+        animation: blink 1s steps(2, start) infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    section {
+        border-top: 1px solid var(--line);
+        padding: 54px 0;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: var(--green);
+        font-family: "Courier New", monospace;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        letter-spacing: 0;
+    }
+
+    .section-title p {
+        max-width: 520px;
+        color: var(--muted);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .card {
+        min-height: 180px;
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 20px;
+    }
+
+    .card small {
+        color: var(--green);
+        font-family: "Courier New", monospace;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .card h3 {
+        margin: 14px 0 10px;
+        font-size: 1.12rem;
+    }
+
+    .card p {
+        color: #a7c2b0;
+    }
+
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .skills span {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--green-soft);
+        color: var(--text);
+        padding: 8px 11px;
+        font-family: "Courier New", monospace;
+        font-size: 0.92rem;
+    }
+
+    .contact-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel-2);
+        padding: 22px;
+    }
+
+    .contact-box p {
+        color: #a7c2b0;
+        margin-top: 6px;
+    }
+
+    footer {
+        border-top: 1px solid var(--line);
+        padding: 22px 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    .footer-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    @media (max-width: 850px) {
+        .links {
+            display: none;
+        }
+
+        .hero,
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero {
+            min-height: auto;
+            padding: 42px 0;
+        }
+
+        .terminal-body {
+            min-height: 360px;
+            max-height: none;
+        }
+
+        .section-title,
+        .contact-box,
+        .footer-line {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 560px) {
+        .wrap {
+            width: min(100% - 24px, 1080px);
+        }
+
+        .nav .wrap {
+            min-height: 58px;
+        }
+
+        .brand {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.92rem;
+        }
+
+        .hero {
+            gap: 26px;
+            padding: 34px 0 38px;
+        }
+
+        .eyebrow {
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: clamp(2.15rem, 13vw, 3.2rem);
+            line-height: 1.02;
+            margin-bottom: 18px;
+        }
+
+        .lead {
+            font-size: 1rem;
+            margin-bottom: 22px;
+        }
+
+        .actions {
+            width: 100%;
+            gap: 10px;
+        }
+
+        .button {
+            width: 100%;
+            min-height: 46px;
+        }
+
+        .terminal-top {
+            min-height: 38px;
+            padding: 0 12px;
+            font-size: 0.78rem;
+        }
+
+        .terminal-body {
+            min-height: 310px;
+            padding: 14px;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+        }
+
+        section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+        }
+
+        .skills {
+            gap: 8px;
+        }
+
+        .skills span {
+            font-size: 0.82rem;
+            padding: 7px 10px;
+        }
+
+        .card {
+            min-height: 0;
+            padding: 18px;
+        }
+
+        .contact-box {
+            padding: 18px;
+        }
+
+        footer {
+            padding: 18px 0;
+        }
+    }
+</style>
+</head>
+
+<body>
+<nav class="nav">
+    <div class="wrap">
+        <a class="brand" href="#top">francisco@devops:~$</a>
+        <div class="links">
+            <a href="#sobre">sobre</a>
+            <a href="#skills">skills</a>
+            <a href="#projetos">projetos</a>
+            <a href="#contato">contato</a>
+        </div>
+    </div>
+</nav>
+
+<main id="top">
+    <header class="wrap hero">
+        <div>
+            <p class="eyebrow"><?php echo $greeting; ?>, eu sou Francisco.</p>
+            <h1>ADS, Linux, redes e DevOps.</h1>
+            <p class="lead">
+                Estudante de Analise e Desenvolvimento de Sistemas em busca de estagio. Tenho base em API RESTful com Node.js, Python, Git/GitHub, redes e solucao de problemas.
+            </p>
+            <div class="actions">
+                <a class="button primary" href="https://www.linkedin.com/in/francisco-oliveira-733916246/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a class="button" href="https://github.com/qwertycobain" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+
+        <aside class="terminal" aria-label="Terminal automatico">
+            <div class="terminal-top">
+                <div class="dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <span>portfolio.sh</span>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+                <div class="line"><span class="prompt">francisco@devops:~$</span> boot</div>
+                <div class="line">perfil carregado: estudante ADS | foco DevOps</div>
+                <div class="line muted">executando apresentacao automatica...</div>
+            </div>
+        </aside>
+    </header>
+
+    <section id="sobre">
+        <div class="wrap">
+            <div class="section-title">
+                <h2>./sobre</h2>
+                <p>Perfil direto para uma oportunidade de estagio.</p>
+            </div>
+            <p class="lead">
+                Sou estudante de ADS, apaixonado por Linux e interessado em infraestrutura, redes, automacao e DevOps. Gosto de investigar problemas, entender a causa raiz e documentar o caminho ate a solucao.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="wrap">
+            <div class="section-title">
+                <h2>./skills</h2>
+                <p>Base tecnica atual.</p>
+            </div>
+            <div class="skills">
+                <?php foreach ($skills as $skill): ?>
+                    <span><?php echo htmlspecialchars($skill, ENT_QUOTES, 'UTF-8'); ?></span>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="projetos">
+        <div class="wrap">
+            <div class="section-title">
+                <h2>./projetos</h2>
+                <p>Um projeto feito e espacos para proximos labs reais.</p>
+            </div>
+            <div class="grid">
+                <?php foreach ($projects as $project): ?>
+                    <article class="card">
+                        <small><?php echo htmlspecialchars($project['status'], ENT_QUOTES, 'UTF-8'); ?></small>
+                        <h3><?php echo htmlspecialchars($project['name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                        <p><?php echo htmlspecialchars($project['description'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato">
+        <div class="wrap">
+            <div class="contact-box">
+                <div>
+                    <h2>./contato</h2>
+                    <p>Aberto a estagio em suporte, infraestrutura, backend ou DevOps.</p>
+                </div>
+                <div class="actions">
+                    <a class="button primary" href="https://www.linkedin.com/in/francisco-oliveira-733916246/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a class="button" href="https://github.com/qwertycobain" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="wrap footer-line">
+        <span><?php echo date('Y'); ?> Francisco Oliveira</span>
+        <span><?php echo date('d/m/Y H:i'); ?> BRT</span>
+    </div>
+</footer>
+
+<script>
+    const output = document.querySelector('#terminal-output');
+
+    const sequence = [
+        {
+            command: 'whoami',
+            lines: [
+                'Francisco Oliveira',
+                'Estudante de ADS | futuro DevOps',
+            ],
+        },
+        {
+            command: 'cat foco.txt',
+            lines: [
+                'Linux, redes, automacao e solucao de problemas.',
+                'Buscando estagio para aprender em ambiente real.',
+            ],
+        },
+        {
+            command: 'skills --list',
+            lines: [
+                'Linux | Redes | Troubleshooting | Git/GitHub',
+                'Node.js | APIs RESTful | Python | DevOps',
+            ],
+        },
+        {
+            command: 'ls projetos/',
+            lines: [
+                'api-rest-nodejs        concluido',
+                'laboratorio-linux      em construcao',
+                'devops-labs            proximo passo',
+            ],
+        },
+        {
+            command: 'cat contato.md',
+            lines: [
+                'LinkedIn: linkedin.com/in/francisco-oliveira-733916246',
+                'GitHub: github.com/qwertycobain',
+            ],
+        },
+    ];
+
+    function printLine(text, className = '') {
+        const line = document.createElement('div');
+        line.className = className ? `line ${className}` : 'line';
+        line.textContent = text;
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+    }
+
+    function printPrompt(command) {
+        const line = document.createElement('div');
+        line.className = 'line';
+        line.innerHTML = `<span class="prompt">francisco@devops:~$</span> ${escapeHtml(command)}`;
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+    }
+
+    function escapeHtml(value) {
+        return value.replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+        }[char]));
+    }
+
+    function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function typePrompt(command) {
+        const line = document.createElement('div');
+        line.className = 'line cursor';
+        line.innerHTML = '<span class="prompt">francisco@devops:~$</span> ';
+        output.appendChild(line);
+
+        for (let index = 0; index < command.length; index += 1) {
+            line.innerHTML = `<span class="prompt">francisco@devops:~$</span> ${escapeHtml(command.slice(0, index + 1))}`;
+            await sleep(38);
+        }
+
+        line.classList.remove('cursor');
+        line.innerHTML = `<span class="prompt">francisco@devops:~$</span> ${escapeHtml(command)}`;
+        output.scrollTop = output.scrollHeight;
+    }
+
+    async function runTerminal() {
+        await sleep(700);
+
+        for (const item of sequence) {
+            await typePrompt(item.command);
+            await sleep(260);
+            item.lines.forEach((line) => printLine(line));
+            await sleep(900);
+        }
+
+        printLine('status: disponivel para estagio', 'muted');
+    }
+
+    runTerminal();
+</script>
+</body>
+</html>
