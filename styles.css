@@ -405,11 +405,11 @@ footer {
     }
 
     .terminal-body {
-        height: 310px;
-        max-height: 48vh;
+        height: 340px;
+        max-height: 52vh;
         padding: 14px;
-        font-size: 0.82rem;
-        line-height: 1.45;
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
 
     .dot {
