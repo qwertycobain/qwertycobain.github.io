@@ -2,44 +2,77 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://astro-paper.pages.dev/",
-    title: "francsco.py",
-    description:  "Anotações sobre computação, Linux, infraestrutura e tecnologia.",
+    url: "https://franciscooliveiradevops.github.io/",
+    title: "francisco.py",
+    description:
+      "Anotações sobre computação, Linux, infraestrutura e tecnologia.",
     author: "Francisco",
     profile: "https://github.com/franciscooliveiradevops",
     ogImage: "default-og.jpg",
-    lang: "pt",
-    timezone: "Asia/Bangkok",
+    lang: "pt-BR",
+    timezone: "America/Sao_Paulo",
     dir: "ltr",
   },
+
   posts: {
     perPage: 4,
     perIndex: 4,
     scheduledPostMargin: 15 * 60 * 1000,
   },
+
   features: {
     lightAndDarkMode: true,
     dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
+
     editPost: {
       enabled: true,
-      url: "https://franciscooliveiradevops.github.io/",
+      url: "https://github.com/franciscooliveiradevops/franciscooliveiradevops.github.io/edit/main/",
     },
+
     search: "pagefind",
   },
+
   socials: [
-    { name: "github",   url: "https://github.com/franciscooliveiradevops" },
-    { name: "x",        url: "https://x.com/" },
-    { name: "linkedin", url: "https://www.linkedin.com/in/francisco-oliveira-733916246/" },
-    { name: "mail",     url: "mailto:francisco.oliveiraops@gmail.com" },
+    {
+      name: "github",
+      url: "https://github.com/franciscooliveiradevops",
+    },
+    {
+      name: "linkedin",
+      url: "https://www.linkedin.com/in/francisco-oliveira-733916246/",
+    },
+    {
+      name: "mail",
+      url: "mailto:francisco.oliveiraops@gmail.com",
+    },
   ],
+
   shareLinks: [
-    { name: "whatsapp", url: "https://wa.me/?text=" },
-    { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },
-    { name: "x",        url: "https://x.com/intent/post?url=" },
-    { name: "telegram", url: "https://t.me/share/url?url=" },
-    { name: "pinterest", url: "https://pinterest.com/pin/create/button/?url=" },
-    { name: "mail",     url: "mailto:?subject=See%20this%20post&body=" },
+    {
+      name: "whatsapp",
+      url: "https://wa.me/?text=",
+    },
+    {
+      name: "facebook",
+      url: "https://www.facebook.com/sharer.php?u=",
+    },
+    {
+      name: "x",
+      url: "https://x.com/intent/post?url=",
+    },
+    {
+      name: "telegram",
+      url: "https://t.me/share/url?url=",
+    },
+    {
+      name: "pinterest",
+      url: "https://pinterest.com/pin/create/button/?url=",
+    },
+    {
+      name: "mail",
+      url: "mailto:?subject=See%20this%20post&body=",
+    },
   ],
 });
