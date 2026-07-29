@@ -9,7 +9,7 @@ export default defineAstroPaperConfig({
     author: "Francisco",
     profile: "https://github.com/franciscooliveiradevops",
     ogImage: "default-og.jpg",
-    lang: "pt-BR",
+    lang: "en",
     timezone: "America/Sao_Paulo",
     dir: "ltr",
   },
