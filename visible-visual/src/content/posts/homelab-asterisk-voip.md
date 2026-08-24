@@ -14,9 +14,9 @@ featured: false
 draft: false
 ---
 
-Recebi uma chamada para entrevista de estágio em uma empresa de telecomunicações. A vaga era de estágio e pedia experiência com **3CX**, **SNEP**, **Wireshark** e protocolo **SIP**. Dos citados, eu só conhecia o Wireshark, e tinha 2 dias pra estudar. Fui pra cima com tudo pra tentar entender a fundo como isso tudo funcionava.
+Fui chamado para uma entrevista de estágio em uma empresa de telecomunicações. A vaga exigia conhecimentos prévios com **3CX**, **SNEP**, **Wireshark** e protocolo **SIP**. Dos citados, eu só conhecia o Wireshark, e tinha 3 dias pra estudar. Fui pra cima com tudo pra tentar entender a fundo como isso tudo funcionava.
 
-Li bastante, dediquei meus 2 dias somente a isso pra ir preparado pra entrevista.
+Li bastante, dediquei meus dias somente a isso pra ir preparado pra entrevista.
 
 No momento que eu estava arrumado e pronto pra sair, recebi uma mensagem dizendo que tiveram imprevistos e teriam que remarcar, posteriormente disseram que cancelaram a vaga 🤡.
 
@@ -26,15 +26,18 @@ Mas é aquilo, se a vida te der limões faça uma caipirinha.
 
 ## O que é SNEP?
 
-O SNEP é uma solução brasileira de PABX IP bastante usada em empresas por aqui. O que poucos sabem — e eu descobri pesquisando — é que ele é construído em cima do **Asterisk**, que é o motor open source de telefonia mais usado no mundo.
+A vaga pedia SNEP, mas oque é isso afinal??? eu nunca tinha ouvido falar..mas depois de pesquisar muito descobri que basicamente o SNEP é uma interface em php que vai funcionar encima do asterisk.
 
-Ou seja: entender o Asterisk é entender a base do SNEP.
+ja o asterisk é a base, o servidor que vai receber encaminhar e registrar todas as nossas chamadas na nossa super estação de telefonia. 
+o snep foi criado pra facilitar a instalação e configuração, deixar mais intuitiva e pratica ja que tem interface grafica.
+
+eu escolhi o asterisk pro lab justamente por ser a base do SNEP, a minha lógica é, se eu entender a base o resto é suave, sempre foi minha forma de pensar a respeito das coisas e é só assim que o conhecimento fixa na minha cabeça.
 
 ---
 
 ## A topologia do lab
 
-Ao invés de só ler documentação, subi um ambiente funcional na minha própria rede:
+essa foi a minha "infra" 
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -56,18 +59,18 @@ Ao invés de só ler documentação, subi um ambiente funcional na minha própri
 └─────────────────────────────────────────────────────┘
 ```
 
-- **VM Ubuntu** rodando no VirtualBox com adaptador em modo **bridge** — isso faz a VM pegar um IP direto na rede local, sem NAT no meio
-- **Asterisk** instalado na VM atuando como PBX (Private Branch Exchange)
-- **Linphone** no host (ramal 991) e no celular (ramal 190), ambos na mesma rede
+- **VM Ubuntu** rodando o asterisk com a placa de rede em **bridge** para que o servidor seja acessivel na rede local 
+- **Linphone** é um software que simula um telefone, tem teclado de discagem e etc, para configurar ele voce precisa conectar em um pbx, no caso será nosso asterisk.
+no host (ramal 991) e no celular (ramal 190), ambos na mesma rede
 
-O modo bridge foi essencial: sem ele não daria certo.
+
 
 ---
 
 ## Instalação do Asterisk
 
 ```bash
-sudo apt update && sudo apt upgrade -y
+sudo apt update -y
 sudo apt install asterisk -y
 ```
 
@@ -82,7 +85,8 @@ sudo asterisk -rvvv
 
 ## Configuração dos ramais
 
-O Asterisk usa arquivos de configuração em `/etc/asterisk/`. Os dois principais que editei foram o `pjsip.conf` e o `extensions.conf`.
+O Asterisk usa arquivos de configuração em `/etc/asterisk/`. Os dois principais que editei foram o `pjsip.conf`
+enquanto eu estava pesquisando sobre eu pensei no pjsip.conf como uma especie de lista de usuarios, claro que não é só isso, mas é aqui que ficam armazenadas login e senha.
 
 ### /etc/asterisk/pjsip.conf
 
@@ -123,10 +127,12 @@ max_contacts=1
 
 ### /etc/asterisk/extensions.conf
 
+  e o  `extensions.conf` seria a logica, como essas ligações serão feitas, qual o comportamento esperado? oque o asterisk deve fazer quando alguem discar 190? pra quem encaminhar? por quanto tempo deve tocar? ele deve tocar uma mensagem gravada??.
+
 ```ini
 [interno]
-exten => 190,1,Dial(PJSIP/190)
-exten => 991,1,Dial(PJSIP/991)
+exten => 190,1,Dial(PJSIP/190) //se alguem discar 190, o asterisk vai encaminhar a ligação para o ramal 190
+exten => 991,1,Dial(PJSIP/991) // mesma coisa porem pro 991
 ```
 
 Depois de editar, recarrega as configurações sem derrubar o serviço:
@@ -142,15 +148,13 @@ dialplan reload
 
 ## Registrando os ramais no Linphone
 
-No Linphone (host e celular), configurei uma conta SIP com:
+Ja fizemos a parte mais dificil, agora e só logar nos usuarios que registramos no pjsip.conf, com as credenciais que cadastramos lá.
 
-- **Domínio/Servidor SIP**: IP da VM na rede local
+- **Domínio/Servidor SIP**: 192.168.1.107
 - **Usuário**: `190` ou `991`
 - **Senha**: a definida no `pjsip.conf`
 - **Porta**: 5060 (padrão SIP)
 - **Transporte**: UDP
-
-Com o modo bridge ativo, o Linphone do celular enxerga a VM diretamente, sem precisar de port forwarding ou gambiarras ilimunati.
 
 Configuração no celular (ramal 190):
 
@@ -161,6 +165,8 @@ Fiz o mesmo no host (ramal 991), mudando apenas as credenciais — login e senha
 Com os dois ramais registrados, a chamada funcionou:
 
 ![Celular ligando para o host via Asterisk](./temos-telefonia.jpg)
+
+EXTREMAMENTE SATISFATORIO KKKKK, e funciona super bem, baixa latencia, zero ruido.(talvez por ser rede local né..)
 
 ---
 
@@ -180,61 +186,18 @@ sip
 
 ![Captura do Wireshark mostrando o tráfego SIP durante a chamada — host 192.168.1.105, Asterisk 192.168.1.107, celular 192.168.1.100](./wireshark.png)
 
-### Fluxo de registro (REGISTER)
-
-Quando o Linphone conecta, o Wireshark mostra o handshake de registro:
-
-```
-REGISTER sip:192.168.1.107 SIP/2.0
-  → 401 Unauthorized (o servidor pede autenticação)
-REGISTER sip:192.168.1.107 SIP/2.0 (com credenciais)
-  → 200 OK
-```
-
-### Fluxo de chamada (INVITE)
-
-Ao fazer uma chamada do ramal 190 (celular) para o ramal 991 (host):
-
-```
-INVITE sip:991@192.168.1.107;transport=udp SIP/2.0  (celular → Asterisk)
-  → 100 Trying
-  → 180 Ringing
-  → 200 OK (INVITE)
-ACK sip:asterisk@192.168.1.107:5060 SIP/2.0
-  [sessão de áudio RTP estabelecida]
-BYE sip:991@192.168.1.105;transport=udp SIP/2.0
-  → 200 OK (BYE)
-```
-
-### O que tem no SDP
-
-Dentro do pacote `INVITE` vem um bloco **SDP (Session Description Protocol)** que negocia o áudio:
-
-```
-v=0
-o=- ... IN IP4 192.168.1.100
-s=Talk
-c=IN IP4 192.168.1.100
-t=0 0
-m=audio 7078 RTP/AVP 0 8 96
-a=rtpmap:0 PCMU/8000
-a=rtpmap:8 PCMA/8000
-```
-
-O `m=audio 7078` indica a porta UDP onde o áudio RTP vai trafegar. O codec `PCMU/8000` (G.711 µ-law) é o padrão para chamadas VoIP, com 8000 amostras por segundo.
+não precisa ser um genio pra saber que eles usam o wireshark pra debugging. 
+O protocolo sip é de sinalização, ele serve justamente pra comunicar o estado da ligação, se o telefone está tocando, se a ligação foi atendida, se é hora de chamar o rtp pra transmitir MIDIA , seja audio ou video ou se é hora de encerrar a chamada .É relativamente simples de entender e uma das partes mais divertidas do projeto foi monitorar os pacotes em tempo real.
 
 ---
 
-## O que aprendi com isso
+## Considerações Finais
 
-**SIP é só sinalização.** Quem carrega o áudio de verdade é o RTP, em uma porta UDP negociada pelo SDP dentro do INVITE. É uma separação importante pra entender quando você está depurando problemas de chamada.
-
-**Asterisk é poderoso e documentado.** Dá pra fazer muita coisa só editando arquivos de texto. O SNEP provavelmente abstrai tudo isso numa interface gráfica, mas o motor por baixo é o mesmo.
-
-**Wireshark é indispensável em telecom.** Consegui ver cada etapa da negociação SIP, identificar qual codec foi escolhido e confirmar que o registro estava funcionando — tudo sem precisar de log do Asterisk.
-
----
-
-Infelizmente a entrevista não rolou. Mas pelo menos rendeu meu primeiro post aqui nesse blog e agora eu sei configurar um PBX do zero, entendo como o SIP funciona na prática e consigo ler um trace de Wireshark em VoIP.
+ 
+Infelizmente a entrevista não rolou,uma pena pq eu adoraria trabalhar com isso ,mas rendeu um post legal aqui no blog.
 
 Foi divertido.
+
+---
+
+
